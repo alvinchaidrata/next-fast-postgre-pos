@@ -21,3 +21,12 @@ class UserUpdate(BaseModel):
 class User(UserBase):
     class Config:
         from_attributes = True
+
+
+class UserOut(BaseModel):
+    id: str
+    name: str
+    email: EmailStr
+
+    class Config:
+        from_attributes = True

@@ -1,8 +1,9 @@
 from fastapi import Response
 from sqlalchemy.orm import Session
+from fastapi_pagination.ext.sqlalchemy import paginate
 from app.models.user import User
 from app.schemas.user import User as UserSchema, UserBase, UserUpdate
-from fastapi_pagination.ext.sqlalchemy import paginate
+from app.utils.password import get_hashed_password
 
 
 def get_users(search: str, db: Session):
@@ -24,6 +25,7 @@ def create_user(
     user: UserBase,
 ) -> UserSchema:
     new_user = User(**user.model_dump())
+    new_user.password = get_hashed_password(new_user.password)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
