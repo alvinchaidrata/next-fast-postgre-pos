@@ -49,7 +49,6 @@ def update_product(
         if value is not None:
             setattr(db_product, key, value)
     db.commit()
-    db.refresh(db_product)
     return db_product
 
 

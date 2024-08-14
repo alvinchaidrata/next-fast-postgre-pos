@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
-from app.api.endpoints import product, user, auth
+from app.api.endpoints import product, order, user, auth
 from app.core.config import settings
 from app.db.session import engine
 from app.db.base import Base
@@ -29,6 +29,7 @@ app.add_middleware(
 # Include the routers
 app.include_router(auth.router, prefix="", tags=["products"])
 app.include_router(product.router, prefix="/products", tags=["products"])
+app.include_router(order.router, prefix="/orders", tags=["orders"])
 app.include_router(user.router, prefix="/users", tags=["users"])
 
 add_pagination(app)
