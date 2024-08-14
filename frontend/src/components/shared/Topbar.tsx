@@ -12,8 +12,8 @@ export default function Topbar() {
 			<div className="text-3xl font-bold">POS</div>
 			<nav className="flex items-center">
 				<Link
-					className={`${pathname === '/' ? 'border-neutral-400' : 'border-transparent transition hover:border-neutral-400'} flex h-16 shrink-0 items-center gap-x-2 border-b px-5`}
-					href={'/'}
+					className={`${pathname === '/shop' ? 'border-neutral-400' : 'border-transparent transition hover:border-neutral-400'} flex h-16 shrink-0 items-center gap-x-2 border-b px-5`}
+					href={'/shop'}
 					scroll={false}
 				>
 					<AiFillShopping className="h-4 w-4" />
