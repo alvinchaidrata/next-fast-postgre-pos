@@ -1,0 +1,35 @@
+import { unstable_noStore as noStore } from 'next/cache'
+import { fetchProducts } from '@/api/data/fetchProducts'
+import { Product, ProductQuery } from '@/api/interfaces/product'
+import ProductCard from './ProductCard'
+import Pagination from './Pagination'
+
+interface Props {
+	query?: ProductQuery
+	currentPage: number
+}
+
+export default async function ProductsGrid({ ...props }: Props) {
+	noStore()
+
+	const { query, currentPage } = props
+	const paginated_product = await fetchProducts(query, currentPage, 12)
+
+	return (
+		<div className="flex w-full flex-col gap-y-4">
+			<div className="grid w-full gap-4 md:grid-cols-4">
+				{paginated_product.items.map((product: Product) => (
+					<ProductCard
+						key={product.id}
+						product={product}
+					/>
+				))}
+			</div>
+
+			<Pagination
+				paginated_product={paginated_product}
+				{...props}
+			/>
+		</div>
+	)
+}

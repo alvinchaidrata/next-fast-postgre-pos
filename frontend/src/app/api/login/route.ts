@@ -3,15 +3,17 @@ import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { getIronSession } from 'iron-session'
 import { ServerSession } from '@/api/interfaces/session'
-import { API_URL, SESSION_PASSWORD } from '../../../../config'
 
 export async function POST(req: Request) {
 	const formData = await req.formData()
 
 	try {
-		const tokens = await axios.post(`${API_URL}/login`, formData)
+		const tokens = await axios.post(
+			`${process.env.NEXT_PUBLIC_API_URL}/login`,
+			formData,
+		)
 		const session = await getIronSession<ServerSession>(cookies(), {
-			password: SESSION_PASSWORD ?? '',
+			password: process.env.SESSION_PASSWORD ?? '',
 			cookieName: 'user',
 		})
 		session.jwt_token = tokens.data.access_token
