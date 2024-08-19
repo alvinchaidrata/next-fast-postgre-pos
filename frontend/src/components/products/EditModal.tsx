@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Modal } from 'antd'
 import { Formik } from 'formik'
-import { updateProductById } from '@/api/data/updateProductById'
-import { deleteProduct } from '@/api/data/deleteProduct'
+import { updateProductById } from '@/api/data/product/updateProductById'
+import { deleteProduct } from '@/api/data/product/deleteProduct'
 import { Product, ProductForm } from '@/api/interfaces/product'
 import {
 	getInitialData,

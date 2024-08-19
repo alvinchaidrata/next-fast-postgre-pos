@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Product, PostData } from '../interfaces/product'
+import { Product, PostData } from '../../interfaces/product'
 
 export async function updateProductById(
 	product_id: number,

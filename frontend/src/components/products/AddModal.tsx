@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Modal } from 'antd'
 import { Formik } from 'formik'
-import { createProduct } from '@/api/data/createProduct'
+import { createProduct } from '@/api/data/product/createProduct'
 import { ProductForm } from '@/api/interfaces/product'
 import {
 	getInitialData,

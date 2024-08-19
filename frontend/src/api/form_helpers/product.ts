@@ -84,7 +84,7 @@ const uploadImage = async (file: File, path: string): Promise<undefined> => {
 	const imageForm = new FormData()
 	imageForm.append('file', file)
 	imageForm.append('path', path)
-	await axios.post('/api/images', imageForm)
+	await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/images`, imageForm)
 }
 
 const getQueryObj = (pageParams?: { search?: string }): ProductQuery => {

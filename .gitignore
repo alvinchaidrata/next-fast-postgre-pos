@@ -1,6 +1,7 @@
 backend/venv/
 backend/.env
 frontend/public
+frontend/.env
 node_modules/
 .prettierrc.json
 package-lock.json

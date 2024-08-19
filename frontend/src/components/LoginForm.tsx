@@ -17,7 +17,7 @@ export default function LoginFormComponent() {
 		formData.append('password', values.password)
 
 		await axios
-			.post('/api/login', formData)
+			.post(`${process.env.NEXT_PUBLIC_URL}/api/login`, formData)
 			.then((res) => {
 				if (res.data.status === 401) {
 					setDbError('Username or password is wrong.')

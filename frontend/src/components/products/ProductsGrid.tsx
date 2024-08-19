@@ -1,5 +1,4 @@
-import { unstable_noStore as noStore } from 'next/cache'
-import { fetchProducts } from '@/api/data/fetchProducts'
+import { fetchProducts } from '@/api/data/product/fetchProducts'
 import { Product, ProductQuery } from '@/api/interfaces/product'
 import ProductCard from './ProductCard'
 import Pagination from './Pagination'
@@ -10,8 +9,6 @@ interface Props {
 }
 
 export default async function ProductsGrid({ ...props }: Props) {
-	noStore()
-
 	const { query, currentPage } = props
 	const paginated_product = await fetchProducts(query, currentPage, 12)
 

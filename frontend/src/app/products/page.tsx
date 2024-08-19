@@ -1,5 +1,4 @@
 import { Suspense } from 'react'
-
 import Topbar from '@/components/shared/Topbar'
 import Filter from '@/components/products/Filter'
 import AddButton from '@/components/products/AddButton'

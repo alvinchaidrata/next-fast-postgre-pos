@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PaginatedProduct, ProductQuery } from '../interfaces/product'
+import { PaginatedProduct, ProductQuery } from '../../interfaces/product'
 
 export async function fetchProducts(
 	query: ProductQuery | null = null,
@@ -7,11 +7,10 @@ export async function fetchProducts(
 	size: number = 1,
 ): Promise<PaginatedProduct> {
 	try {
+		await new Promise((resolve) => setTimeout(resolve, 2000))
 		const response = await axios.get(
 			`${process.env.NEXT_PUBLIC_API_URL}/products`,
-			{
-				params: { page: page, size: size, ...query },
-			},
+			{ params: { page: page, size: size, ...query } },
 		)
 		return response.data
 	} catch (error) {
