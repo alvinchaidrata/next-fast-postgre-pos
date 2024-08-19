@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ReadonlyURLSearchParams } from 'next/navigation'
 import {
 	Product,
 	ProductForm,
@@ -9,7 +10,7 @@ import {
 import numberWithCommas from '@/utils/numbers/numberWithCommas'
 import convertToNumber from '@/utils/numbers/convertToNumber'
 
-const getInitialData = (product: Product | null = null): ProductForm => {
+export const getInitialData = (product: Product | null = null): ProductForm => {
 	const form: ProductForm = {
 		name: '',
 		description: '',
@@ -32,7 +33,7 @@ const getInitialData = (product: Product | null = null): ProductForm => {
 	return form
 }
 
-const parseForm = (values: ProductForm): PostData => {
+export const parseForm = (values: ProductForm): PostData => {
 	return {
 		...values,
 		price: convertToNumber(values.price),
@@ -40,7 +41,8 @@ const parseForm = (values: ProductForm): PostData => {
 		image: values.new_image_path ?? values.image,
 	}
 }
-const validateData = (values: ProductForm): ProductError => {
+
+export const validateData = (values: ProductForm): ProductError => {
 	const errors: ProductError = {}
 
 	// Name field validation
@@ -80,14 +82,17 @@ const validateData = (values: ProductForm): ProductError => {
 	return errors
 }
 
-const uploadImage = async (file: File, path: string): Promise<undefined> => {
+export const uploadImage = async (
+	file: File,
+	path: string,
+): Promise<undefined> => {
 	const imageForm = new FormData()
 	imageForm.append('file', file)
 	imageForm.append('path', path)
 	await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/images`, imageForm)
 }
 
-const getQueryObj = (pageParams?: { search?: string }): ProductQuery => {
+export const getQueryObj = (pageParams?: { search?: string }): ProductQuery => {
 	const query: ProductQuery = {}
 
 	if (pageParams) {
@@ -98,5 +103,3 @@ const getQueryObj = (pageParams?: { search?: string }): ProductQuery => {
 
 	return query
 }
-
-export { getInitialData, parseForm, validateData, uploadImage, getQueryObj }

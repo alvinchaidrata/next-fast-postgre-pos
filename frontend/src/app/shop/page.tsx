@@ -1,11 +1,11 @@
-import { Suspense } from 'react'
+'use client'
+
 import { getQueryObj } from '@/api/form_helpers/product'
+import { StoreProvider } from '@/redux/StoreProvider'
 import Topbar from '@/components/shared/Topbar'
 import Filter from '@/components/shop/Filter'
 import ProductsGrid from '@/components/shop/ProductsGrid'
-import ProductsGridSkeleton from '@/components/shop/ProductsGridSkeleton'
 import OrderDetails from '@/components/shop/OrderDetails'
-import OrderDetailsSkeleton from '@/components/shop/OrderDetailsSkeleton'
 
 interface Props {
 	searchParams?: {
@@ -19,7 +19,7 @@ export default function Shop({ searchParams }: Props) {
 	const currentPage = Number(searchParams?.page) || 1
 
 	return (
-		<>
+		<StoreProvider>
 			<Topbar />
 
 			<div className="flex w-full flex-1 flex-col pr-80 pt-16">
@@ -27,22 +27,15 @@ export default function Shop({ searchParams }: Props) {
 					<div className="flex w-full flex-col gap-5 p-5">
 						<Filter />
 
-						<Suspense
-							key={search + currentPage}
-							fallback={<ProductsGridSkeleton />}
-						>
-							<ProductsGrid
-								query={getQueryObj(searchParams)}
-								currentPage={currentPage}
-							/>
-						</Suspense>
+						<ProductsGrid
+							query={getQueryObj(searchParams)}
+							currentPage={currentPage}
+						/>
 					</div>
 				</div>
 			</div>
 
-			<Suspense fallback={<OrderDetailsSkeleton />}>
-				<OrderDetails />
-			</Suspense>
-		</>
+			<OrderDetails />
+		</StoreProvider>
 	)
 }

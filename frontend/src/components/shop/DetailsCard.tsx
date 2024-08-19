@@ -2,9 +2,10 @@
 
 import Image from 'next/image'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
+import { useAppDispatch } from '@/redux/hooks'
+import { updateQuantity } from '@/redux/cart/cartSlice'
 import numberWithCommas from '@/utils/numbers/numberWithCommas'
 import { OrderProduct } from '@/api/interfaces/order'
-import useCart from '@/hooks/useCart'
 
 interface Props {
 	product: OrderProduct
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export default function DetailsCard({ product, session }: Props) {
-	const { quantity, updateProductQuantity } = useCart(product.data, session)
+	const dispatch = useAppDispatch()
 
 	return (
 		<div className="flex w-full items-center gap-x-3 rounded-md border border-neutral-200 bg-white p-2">
@@ -40,12 +41,19 @@ export default function DetailsCard({ product, session }: Props) {
 						<button
 							type="button"
 							className="flex items-center rounded bg-neutral-200 p-0.5"
-							onClick={() => updateProductQuantity(-1)}
+							onClick={() =>
+								dispatch(
+									updateQuantity({
+										delta: -1,
+										product: product.data,
+									}),
+								)
+							}
 						>
 							<AiOutlineMinus className="h-3 w-3" />
 						</button>
 						<span className="text-xs">
-							{numberWithCommas(quantity)}
+							{numberWithCommas(session ? session.quantity : 0)}
 						</span>
 						<button
 							type="button"
@@ -53,7 +61,14 @@ export default function DetailsCard({ product, session }: Props) {
 						>
 							<AiOutlinePlus
 								className="h-3 w-3"
-								onClick={() => updateProductQuantity(1)}
+								onClick={() =>
+									dispatch(
+										updateQuantity({
+											delta: 1,
+											product: product.data,
+										}),
+									)
+								}
 							/>
 						</button>
 					</div>

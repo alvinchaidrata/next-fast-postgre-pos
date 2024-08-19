@@ -2,18 +2,19 @@
 
 import Image from 'next/image'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import useCart from '@/hooks/useCart'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { updateQuantity } from '@/redux/cart/cartSlice'
 import { Product } from '@/api/interfaces/product'
 import numberWithCommas from '@/utils/numbers/numberWithCommas'
-import { OrderProduct } from '@/api/interfaces/order'
 
 interface Props {
 	product: Product
-	session: OrderProduct | null
 }
 
-export default function ProductCard({ product, session }: Props) {
-	const { quantity, updateProductQuantity } = useCart(product, session)
+export default function ProductCard({ product }: Props) {
+	const cart = useAppSelector((state) => state.cart)
+	const session = cart.products.find((prod) => prod.data.id === product.id)
+	const dispatch = useAppDispatch()
 
 	return (
 		<div className="flex h-full w-full flex-col rounded-md border border-neutral-200 bg-white p-3">
@@ -37,20 +38,36 @@ export default function ProductCard({ product, session }: Props) {
 						Rp. {numberWithCommas(product.price)}
 					</h2>
 
-					{quantity ?
+					{session ?
 						<div className="flex items-center gap-x-2">
 							<button
 								type="button"
 								className="flex items-center rounded-md bg-neutral-200 p-0.5"
-								onClick={() => updateProductQuantity(-1)}
+								onClick={() =>
+									dispatch(
+										updateQuantity({
+											delta: -1,
+											product: product,
+										}),
+									)
+								}
 							>
 								<AiOutlineMinus className="h-4 w-4" />
 							</button>
-							<span className="text-sm">{quantity}</span>
+							<span className="text-sm">
+								{numberWithCommas(session.quantity)}
+							</span>
 							<button
 								type="button"
 								className="flex items-center rounded-md bg-neutral-200 p-0.5"
-								onClick={() => updateProductQuantity(1)}
+								onClick={() =>
+									dispatch(
+										updateQuantity({
+											delta: 1,
+											product: product,
+										}),
+									)
+								}
 							>
 								<AiOutlinePlus className="h-4 w-4" />
 							</button>
@@ -58,7 +75,14 @@ export default function ProductCard({ product, session }: Props) {
 					:	<button
 							type="button"
 							className="flex items-center rounded-md bg-neutral-200 p-0.5"
-							onClick={() => updateProductQuantity(1)}
+							onClick={() =>
+								dispatch(
+									updateQuantity({
+										delta: 1,
+										product: product,
+									}),
+								)
+							}
 						>
 							<AiOutlinePlus className="h-4 w-4" />
 						</button>

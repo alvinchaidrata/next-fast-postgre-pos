@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React, { useState } from 'react'
 
 // Used to bridge conditional rendering and a component's transition animation

@@ -4,7 +4,7 @@ import { PaginatedProduct, ProductQuery } from '../../interfaces/product'
 export async function fetchProducts(
 	query: ProductQuery | null = null,
 	page: number = 1,
-	size: number = 1,
+	size: number = 12,
 ): Promise<PaginatedProduct> {
 	try {
 		await new Promise((resolve) => setTimeout(resolve, 2000))

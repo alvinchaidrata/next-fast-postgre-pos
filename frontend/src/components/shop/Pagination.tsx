@@ -29,7 +29,7 @@ export default function Pagination({
 	const PageLink = ({ page }: { page: number }) => (
 		<Link
 			href={{
-				pathname: '/products',
+				pathname: '/shop',
 				query: getLinkParams(page),
 			}}
 			className={`${page == currentPage ? 'border border-black' : 'transition-all hover:bg-black/10'} flex h-8 w-8 items-center justify-center rounded-md p-2`}
@@ -114,7 +114,7 @@ export default function Pagination({
 			<div className="flex items-center gap-x-4">
 				<Link
 					href={{
-						pathname: '/products',
+						pathname: '/shop',
 						query: getLinkParams(
 							currentPage - 1 < 1 ? currentPage : currentPage - 1,
 						),
@@ -127,7 +127,7 @@ export default function Pagination({
 				{generateLinks().map((el: React.ReactNode) => el)}
 				<Link
 					href={{
-						pathname: '/products',
+						pathname: '/shop',
 						query: getLinkParams(
 							currentPage + 1 > paginated_product.pages ?
 								currentPage
