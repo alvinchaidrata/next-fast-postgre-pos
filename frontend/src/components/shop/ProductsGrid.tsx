@@ -29,21 +29,27 @@ export default function ProductsGrid({ ...props }: Props) {
 		})
 	}, [query, currentPage])
 
-	return paginatedProduct && !loading ?
-			<div className="flex w-full flex-col gap-y-4">
-				<div className="grid w-full gap-4 md:grid-cols-3">
-					{paginatedProduct.items.map((product: Product) => (
-						<ProductCard
-							key={product.id}
-							product={product}
-						/>
-					))}
-				</div>
+	return (
+		paginatedProduct && !loading ?
+			paginatedProduct.items.length > 0 ?
+				<div className="flex w-full flex-col gap-y-4">
+					<div className="grid w-full gap-4 md:grid-cols-3">
+						{paginatedProduct.items.map((product: Product) => (
+							<ProductCard
+								key={product.id}
+								product={product}
+							/>
+						))}
+					</div>
 
-				<Pagination
-					paginated_product={paginatedProduct}
-					{...props}
-				/>
-			</div>
+					<Pagination
+						paginated_product={paginatedProduct}
+						{...props}
+					/>
+				</div>
+			:	<span className="mx-auto text-xs opacity-30">
+					No product(s) found.
+				</span>
 		:	<ProductsGridSkeleton />
+	)
 }

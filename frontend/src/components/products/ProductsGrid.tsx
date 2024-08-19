@@ -12,21 +12,23 @@ export default async function ProductsGrid({ ...props }: Props) {
 	const { query, currentPage } = props
 	const paginated_product = await fetchProducts(query, currentPage, 12)
 
-	return (
-		<div className="flex w-full flex-col gap-y-4">
-			<div className="grid w-full gap-4 md:grid-cols-4">
-				{paginated_product.items.map((product: Product) => (
-					<ProductCard
-						key={product.id}
-						product={product}
-					/>
-				))}
-			</div>
+	return paginated_product.items.length > 0 ?
+			<div className="flex w-full flex-col gap-y-4">
+				<div className="grid w-full gap-4 md:grid-cols-4">
+					{paginated_product.items.map((product: Product) => (
+						<ProductCard
+							key={product.id}
+							product={product}
+						/>
+					))}
+				</div>
 
-			<Pagination
-				paginated_product={paginated_product}
-				{...props}
-			/>
-		</div>
-	)
+				<Pagination
+					paginated_product={paginated_product}
+					{...props}
+				/>
+			</div>
+		:	<span className="mx-auto text-xs opacity-30">
+				No product(s) found.
+			</span>
 }

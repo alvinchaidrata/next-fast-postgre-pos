@@ -13,7 +13,7 @@ export default function Pagination({
 	query,
 	currentPage,
 }: Props) {
-	const getLinkParams = (pageNum: number, query?: ProductQuery) => {
+	const getLinkParams = (pageNum: number) => {
 		const params: null | Record<string, string | number> = {
 			page: pageNum,
 		}
@@ -26,18 +26,21 @@ export default function Pagination({
 		return params
 	}
 
-	const PageLink = ({ page }: { page: number }) => (
-		<Link
-			href={{
-				pathname: '/shop',
-				query: getLinkParams(page),
-			}}
-			className={`${page == currentPage ? 'border border-black' : 'transition-all hover:bg-black/10'} flex h-8 w-8 items-center justify-center rounded-md p-2`}
-			scroll={false}
-		>
-			{page}
-		</Link>
-	)
+	const PageLink = ({ page }: { page: number }) =>
+		page == currentPage ?
+			<div className="flex h-8 w-8 items-center justify-center rounded-md border border-black">
+				{page}
+			</div>
+		:	<Link
+				href={{
+					pathname: '/shop',
+					query: getLinkParams(page),
+				}}
+				className="flex h-8 w-8 items-center justify-center rounded-md p-2 transition-all hover:bg-black/10"
+				scroll={false}
+			>
+				{page}
+			</Link>
 
 	const getLinks = (start: number, end: number): React.ReactNode[] => {
 		const links = []
@@ -110,36 +113,50 @@ export default function Pagination({
 	}
 
 	return (
-		<div className="flex w-full items-center justify-center">
-			<div className="flex items-center gap-x-4">
-				<Link
-					href={{
-						pathname: '/shop',
-						query: getLinkParams(
-							currentPage - 1 < 1 ? currentPage : currentPage - 1,
-						),
-					}}
-					className="flex h-8 w-8 items-center justify-center rounded-md p-2 transition-all hover:bg-black/10"
-					scroll={false}
-				>
-					<GrPrevious className="w-full" />
-				</Link>
-				{generateLinks().map((el: React.ReactNode) => el)}
-				<Link
-					href={{
-						pathname: '/shop',
-						query: getLinkParams(
-							currentPage + 1 > paginated_product.pages ?
-								currentPage
-							:	currentPage + 1,
-						),
-					}}
-					className="flex h-8 w-8 items-center justify-center rounded-md p-2 transition-all hover:bg-black/10"
-					scroll={false}
-				>
-					<GrNext className="w-full" />
-				</Link>
+		paginated_product.items.length > 0 && (
+			<div className="flex w-full items-center justify-center">
+				<div className="flex items-center gap-x-4">
+					{currentPage == 1 ?
+						<div className="flex h-8 w-8 items-center justify-center opacity-30">
+							<GrPrevious className="w-full" />
+						</div>
+					:	<Link
+							href={{
+								pathname: '/shop',
+								query: getLinkParams(
+									currentPage - 1 < 1 ?
+										currentPage
+									:	currentPage - 1,
+								),
+							}}
+							className="flex h-8 w-8 items-center justify-center rounded-md p-2 transition-all hover:bg-black/10"
+							scroll={false}
+						>
+							<GrPrevious className="w-full" />
+						</Link>
+					}
+					{generateLinks().map((el: React.ReactNode) => el)}
+					{currentPage == paginated_product.pages ?
+						<div className="flex h-8 w-8 items-center justify-center opacity-30">
+							<GrNext className="w-full" />
+						</div>
+					:	<Link
+							href={{
+								pathname: '/shop',
+								query: getLinkParams(
+									currentPage + 1 > paginated_product.pages ?
+										currentPage
+									:	currentPage + 1,
+								),
+							}}
+							className="flex h-8 w-8 items-center justify-center rounded-md p-2 transition-all hover:bg-black/10"
+							scroll={false}
+						>
+							<GrNext className="w-full" />
+						</Link>
+					}
+				</div>
 			</div>
-		</div>
+		)
 	)
 }

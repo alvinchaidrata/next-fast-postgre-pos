@@ -15,6 +15,7 @@ export default function Filter() {
 		} else {
 			params.delete('search')
 		}
+		params.delete('page')
 
 		replace(`${pathname}?${params.toString()}`, { scroll: false })
 	}, 500)
