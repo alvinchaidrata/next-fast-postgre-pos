@@ -25,7 +25,7 @@ export default function OrderDetails() {
 
 			const params = new URLSearchParams()
 			params.set('order', res.id)
-			router.push(`/orders?${params.toString()}`)
+			router.push(`/orders?${params.toString()}`, { scroll: false })
 		})
 	}
 
