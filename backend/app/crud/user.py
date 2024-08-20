@@ -10,7 +10,7 @@ def get_users(search: str, db: Session):
     return paginate(
         db,
         db.query(User)
-        .filter(User.name.ilike("%" + search + "%"))
+        .filter(User.id.ilike("%" + search + "%"))
         .order_by(User.created_at),
     )
 

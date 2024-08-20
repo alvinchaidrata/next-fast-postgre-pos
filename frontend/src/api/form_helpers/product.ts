@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { ReadonlyURLSearchParams } from 'next/navigation'
 import {
 	Product,
 	ProductForm,

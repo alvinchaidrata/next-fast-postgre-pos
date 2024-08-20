@@ -1,18 +1,19 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
+from typing import Optional
 
 
 class UserBase(BaseModel):
     id: str
-    name: str
-    email: EmailStr
     password: str
+    image: Optional[str] = ""
+    role: str
 
 
 class UserUpdate(BaseModel):
     id: str
-    name: str
-    email: EmailStr
-    password: str
+    password: Optional[str]
+    image: Optional[str] = ""
+    role: str
 
     class Config:
         from_attributes = True
@@ -25,8 +26,8 @@ class User(UserBase):
 
 class UserOut(BaseModel):
     id: str
-    name: str
-    email: EmailStr
+    image: Optional[str] = ""
+    role: str
 
     class Config:
         from_attributes = True

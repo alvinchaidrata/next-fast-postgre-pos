@@ -20,14 +20,14 @@ def create_user(
     user: UserBase,
     db: Session = Depends(get_db),
 ):
-    db_user = User.get_user_by_id(db, user_id=user.id)
-    if db_user:
+    exist = User.get_user_by_id(db, user_id=user.id)
+    if exist:
         raise HTTPException(status_code=400, detail="ID has been taken.")
     return User.create_user(db=db, user=user)
 
 
 @router.get("/{user_id}", response_model=UserOut)
-def read_user(user_id: int, db: Session = Depends(get_db)):
+def read_user(user_id: str, db: Session = Depends(get_db)):
     db_user = User.get_user_by_id(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -36,18 +36,19 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{user_id}", response_model=UserOut)
 def update_user(
-    user_id: int,
+    user_id: str,
     user: UserUpdate,
     db: Session = Depends(get_db),
 ):
     db_user = User.get_user_by_id(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
+
     return User.update_user(db=db, db_user=db_user, user=user)
 
 
 @router.delete("/{user_id}", response_model=UserOut)
-def delete_user(user_id: int, db: Session = Depends(get_db)):
+def delete_user(user_id: str, db: Session = Depends(get_db)):
     db_user = User.get_user_by_id(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
