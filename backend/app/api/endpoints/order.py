@@ -24,7 +24,7 @@ def create_order(
 
 
 @router.get("/{order_id}", response_model=OrderOut)
-def read_order(order_id: int, db: Session = Depends(get_db)):
+def read_order(order_id: str, db: Session = Depends(get_db)):
     db_order = Order.get_order_by_id(db, order_id=order_id)
     if db_order is None:
         raise HTTPException(status_code=404, detail="Order not found")

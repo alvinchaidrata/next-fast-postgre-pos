@@ -45,6 +45,7 @@ export default function EditProductModal({
 		if (isLoading) {
 			done('Product has been updated')
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [product])
 
 	const submitModal = async (values: ProductForm) => {

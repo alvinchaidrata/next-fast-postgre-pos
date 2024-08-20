@@ -1,11 +1,33 @@
-import { useAppSelector } from '@/redux/hooks'
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { emptyCart } from '@/redux/cart/cartSlice'
 import getTodaysDate from '@/utils/date/getTodaysDate'
 import numberWithCommas from '@/utils/numbers/numberWithCommas'
 import DetailsCard from './DetailsCard'
 import { OrderProduct } from '@/api/interfaces/order'
+import { createOrder } from '@/api/data/order/createOrder'
+import Spinner from '../global/Spinner'
 
 export default function OrderDetails() {
+	const router = useRouter()
 	const cart = useAppSelector((state) => state.cart)
+	const dispatch = useAppDispatch()
+	const [loading, setLoading] = useState(false)
+
+	const handleSubmit = (e: React.MouseEvent) => {
+		e.preventDefault()
+		setLoading(true)
+		createOrder(cart).then((res) => {
+			dispatch(emptyCart())
+
+			const params = new URLSearchParams()
+			params.set('order', res.id)
+			router.push(`/orders?${params.toString()}`)
+		})
+	}
 
 	return (
 		<div className="fixed right-0 top-0 min-h-screen w-80 shrink-0 border-l border-neutral-200 pt-16">
@@ -57,10 +79,12 @@ export default function OrderDetails() {
 				</div>
 
 				<button
-					className={`${cart.total ? '' : 'opacity-30'} w-full rounded-md bg-black px-3 py-2 text-center text-white`}
-					disabled={!cart.total}
+					className={`${cart.total ? '' : 'opacity-30'} flex w-full items-center justify-center gap-x-2 rounded-md bg-black px-3 py-2 text-center text-white`}
+					disabled={!cart.total || loading}
+					onClick={handleSubmit}
 				>
-					Create order
+					<span>Create order</span>
+					{loading && <Spinner className="h-6 w-6 border-white" />}
 				</button>
 			</div>
 		</div>

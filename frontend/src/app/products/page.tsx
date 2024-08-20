@@ -13,7 +13,7 @@ interface Props {
 	}
 }
 
-export default function Orders({ searchParams }: Props) {
+export default function Products({ searchParams }: Props) {
 	const search = searchParams?.search ?? ''
 	const currentPage = Number(searchParams?.page) || 1
 

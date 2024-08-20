@@ -59,7 +59,7 @@ export default function ProductCard({ product }: Props) {
 							</span>
 							<button
 								type="button"
-								className="flex items-center rounded-md bg-neutral-200 p-0.5"
+								className={`${session.quantity + 1 > product.stock ? 'opacity-30' : ''} flex items-center rounded-md bg-neutral-200 p-0.5`}
 								onClick={() =>
 									dispatch(
 										updateQuantity({
@@ -68,13 +68,14 @@ export default function ProductCard({ product }: Props) {
 										}),
 									)
 								}
+								disabled={session.quantity + 1 > product.stock}
 							>
 								<AiOutlinePlus className="h-4 w-4" />
 							</button>
 						</div>
 					:	<button
 							type="button"
-							className="flex items-center rounded-md bg-neutral-200 p-0.5"
+							className={`${product.stock == 0 ? 'opacity-30' : ''} flex items-center rounded-md bg-neutral-200 p-0.5`}
 							onClick={() =>
 								dispatch(
 									updateQuantity({
@@ -83,6 +84,7 @@ export default function ProductCard({ product }: Props) {
 									}),
 								)
 							}
+							disabled={product.stock == 0}
 						>
 							<AiOutlinePlus className="h-4 w-4" />
 						</button>

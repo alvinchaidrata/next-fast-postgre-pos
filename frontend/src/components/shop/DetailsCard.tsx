@@ -57,7 +57,12 @@ export default function DetailsCard({ product, session }: Props) {
 						</span>
 						<button
 							type="button"
-							className="flex items-center rounded bg-neutral-200 p-0.5"
+							className={`${session && session.quantity + 1 > product.data.stock ? 'opacity-30' : ''} flex items-center rounded bg-neutral-200 p-0.5`}
+							disabled={
+								session ?
+									session.quantity + 1 > product.data.stock
+								:	false
+							}
 						>
 							<AiOutlinePlus
 								className="h-3 w-3"

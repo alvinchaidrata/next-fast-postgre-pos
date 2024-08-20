@@ -1,12 +1,32 @@
-export default function OrdersGrid() {
-	return (
-		<div className="flex flex-col gap-y-4">
-			<div className="flex h-full w-full flex-col rounded-md border border-neutral-200 bg-white p-3">
-				<h1 className="truncate text-lg font-medium">
-					Order X023KD222
-				</h1>
-				<p className="text-sm opacity-30">1 item(s), Rp. 190,000</p>
+import { fetchOrders } from '@/api/data/order/fetchOrders'
+import { Order, OrderQuery } from '@/api/interfaces/order'
+import OrderCard from './OrderCard'
+import Pagination from './Pagination'
+
+interface Props {
+	query?: OrderQuery
+	currentPage: number
+}
+
+export default async function OrdersGrid({ ...props }: Props) {
+	const { query, currentPage } = props
+	const paginated_order = await fetchOrders(query, currentPage, 12)
+
+	return paginated_order.items.length > 0 ?
+			<div className="flex w-full flex-col gap-y-4">
+				<div className="grid w-full grid-cols-1 gap-4">
+					{paginated_order.items.map((order: Order) => (
+						<OrderCard
+							key={order.id}
+							order={order}
+						/>
+					))}
+				</div>
+
+				<Pagination
+					paginated_order={paginated_order}
+					{...props}
+				/>
 			</div>
-		</div>
-	)
+		:	<span className="mx-auto text-xs opacity-30">No order(s) found.</span>
 }

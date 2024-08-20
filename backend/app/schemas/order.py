@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 from .product import Product
 
 
@@ -21,6 +22,7 @@ class OrderCreate(OrderBase):
 
 class Order(OrderBase):
     id: str
+    created_at: datetime
 
     class Config:
         from_attributes = True

@@ -1,25 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { OrderProduct } from '@/api/interfaces/order'
 import { Product } from '@/api/interfaces/product'
+import { Cart } from '@/api/interfaces/session'
 
-export interface CartState {
-	subtotal: number
-	tax: number
-	total: number
-	products: OrderProduct[]
+const baseCart = {
+	subtotal: 0,
+	tax: 0,
+	total: 0,
+	products: [],
 }
 
-const value = localStorage.getItem('cart')
-
-const initialState: CartState =
-	value ?
-		JSON.parse(value)
-	:	{
-			subtotal: 0,
-			tax: 0,
-			total: 0,
-			products: [],
-		}
+const initialState: Cart = baseCart
 
 export const cartSlice = createSlice({
 	name: 'cart',
@@ -59,11 +50,13 @@ export const cartSlice = createSlice({
 			cart.tax = cart.subtotal * 0.1
 			cart.total = cart.subtotal + cart.tax
 
-			localStorage.setItem('cart', JSON.stringify(cart))
 			return { ...cart }
+		},
+		emptyCart: () => {
+			return baseCart
 		},
 	},
 })
 
-export const { updateQuantity } = cartSlice.actions
+export const { updateQuantity, emptyCart } = cartSlice.actions
 export default cartSlice.reducer

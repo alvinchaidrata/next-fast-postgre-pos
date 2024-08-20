@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
@@ -6,7 +7,10 @@ import { Product } from '@/api/interfaces/product'
 import { OrderProduct } from '@/api/interfaces/order'
 import { useFirstRender } from '@/hooks/useFirstRender'
 
-export default (product: Product, session: OrderProduct | null) => {
+export default function useCart(
+	product: Product,
+	session: OrderProduct | null,
+) {
 	const router = useRouter()
 	const firstRender = useFirstRender()
 	const runUpdateCart = useRef(true)

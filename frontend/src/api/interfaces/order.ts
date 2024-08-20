@@ -13,13 +13,14 @@ export interface Order {
 	tax: number
 	total: number
 	products: OrderProduct[]
+	created_at: string
 }
 
 export interface OrderQuery {
 	search?: string
 }
 
-export interface PostData extends Omit<Order, 'id'> {}
+export interface PostData extends Omit<Order, 'id' | 'created_at'> {}
 
 export interface PaginatedOrder extends PaginationObj {
 	items: Order[]
