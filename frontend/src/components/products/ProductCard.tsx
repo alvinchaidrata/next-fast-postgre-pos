@@ -5,8 +5,8 @@ import Image from 'next/image'
 import toast, { Toaster } from 'react-hot-toast'
 import useBridge from '@/hooks/useBridge'
 import EditProductModal from './EditModal'
-import { Product } from '@/api/interfaces/product'
-import numberWithCommas from '@/utils/numbers/numberWithCommas'
+import { Product } from '@/interfaces/product'
+import { numberWithCommas } from '@/utils/numbers/numberWithCommas'
 
 interface Props {
 	product: Product

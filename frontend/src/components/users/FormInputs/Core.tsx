@@ -2,14 +2,13 @@
 
 import React from 'react'
 import { useFormikContext, FormikContextType } from 'formik'
-
+import { UserForm } from '@/interfaces/user'
 import ImageInput from './Inputs/Image'
 import UsernameInput from './Inputs/Username'
 import PasswordInput from './Inputs/Password'
 import PasswordConfirm from './Inputs/PasswordConfirm'
 import RoleInput from './Inputs/Role'
 import Footer from './Footer'
-import { UserForm } from '@/api/interfaces/user'
 
 interface Props {
 	isLoading: boolean

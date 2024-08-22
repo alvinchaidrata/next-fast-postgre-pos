@@ -1,5 +1,5 @@
 import { GrPrevious, GrNext } from 'react-icons/gr'
-import { PaginatedProduct, ProductQuery } from '@/api/interfaces/product'
+import { PaginatedProduct, ProductQuery } from '@/interfaces/product'
 import Link from 'next/link'
 
 interface Props {

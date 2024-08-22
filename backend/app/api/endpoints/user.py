@@ -1,16 +1,20 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi_pagination.links import Page
-
 from app.crud import user as User
 from app.schemas.user import UserBase, UserUpdate, UserOut
 from app.db.session import get_db
+from app.dependencies.auth import verify_admin
 
 router = APIRouter()
 
 
 @router.get("/", response_model=Page[UserOut])
-def get_users(search: str = "", db: Session = Depends(get_db)):
+def get_users(
+    search: str = "",
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_admin),
+):
     users = User.get_users(search, db)
     return users
 
@@ -19,6 +23,7 @@ def get_users(search: str = "", db: Session = Depends(get_db)):
 def create_user(
     user: UserBase,
     db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_admin),
 ):
     exist = User.get_user_by_id(db, user_id=user.id)
     if exist:
@@ -27,7 +32,11 @@ def create_user(
 
 
 @router.get("/{user_id}", response_model=UserOut)
-def read_user(user_id: str, db: Session = Depends(get_db)):
+def read_user(
+    user_id: str,
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_admin),
+):
     db_user = User.get_user_by_id(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -39,6 +48,7 @@ def update_user(
     user_id: str,
     user: UserUpdate,
     db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_admin),
 ):
     db_user = User.get_user_by_id(db, user_id=user_id)
     if db_user is None:
@@ -48,7 +58,11 @@ def update_user(
 
 
 @router.delete("/{user_id}", response_model=UserOut)
-def delete_user(user_id: str, db: Session = Depends(get_db)):
+def delete_user(
+    user_id: str,
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_admin),
+):
     db_user = User.get_user_by_id(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")

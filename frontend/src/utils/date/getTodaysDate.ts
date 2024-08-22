@@ -1,4 +1,4 @@
-export default function getTodaysDate(): string {
+export const getTodaysDate = (): string => {
 	return new Date().toLocaleDateString('en-US', {
 		weekday: 'long',
 		year: 'numeric',

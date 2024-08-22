@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { fetchProducts } from '@/api/data/product/fetchProducts'
-import { Product, ProductQuery } from '@/api/interfaces/product'
+import { fetchProducts } from '@/api/client/product/fetchProducts'
+import { Product, ProductQuery } from '@/interfaces/product'
+import { PaginatedProduct } from '@/interfaces/product'
 import ProductCard from './ProductCard'
 import Pagination from './Pagination'
-import { PaginatedProduct } from '@/api/interfaces/product'
 import ProductsGridSkeleton from './ProductsGridSkeleton'
 
 interface Props {

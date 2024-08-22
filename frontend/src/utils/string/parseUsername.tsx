@@ -1,4 +1,4 @@
-export function parseUsername(input: string) {
+export const parseUsername = (input: string) => {
 	// Convert the input string to lowercase
 	let username = input.toLowerCase()
 

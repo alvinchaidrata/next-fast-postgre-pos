@@ -1,4 +1,4 @@
-export default function convertToNumber(input: string): number {
+export const convertToNumber = (input: string): number => {
 	// Remove any commas (thousand separators)
 	const sanitizedInput = input.replace(/,/g, '')
 

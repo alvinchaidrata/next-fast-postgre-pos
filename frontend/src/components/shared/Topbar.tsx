@@ -4,9 +4,12 @@ import { AiFillShopping, AiFillFile, AiFillProduct } from 'react-icons/ai'
 import { FaUser } from 'react-icons/fa'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useAuth } from '@/hooks/useAuth'
+import Profile from './Profile'
 
 export default function Topbar() {
 	const pathname = usePathname()
+	const user = useAuth()
 
 	return (
 		<div className="fixed left-0 top-0 z-50 flex h-16 w-full items-center justify-between gap-x-12 border-b border-neutral-200 bg-white px-5">
@@ -36,16 +39,20 @@ export default function Topbar() {
 					<AiFillProduct className="h-4 w-4" />
 					<span>Products</span>
 				</Link>
-				<Link
-					className={`${pathname === '/users' ? 'border-neutral-400' : 'border-transparent transition hover:border-neutral-400'} flex h-16 shrink-0 items-center gap-x-2 border-b px-5`}
-					href={'/users'}
-					scroll={false}
-				>
-					<FaUser className="h-4 w-4" />
-					<span>Users</span>
-				</Link>
+				{user && user.role === 'Master' && (
+					<Link
+						className={`${pathname === '/users' ? 'border-neutral-400' : 'border-transparent transition hover:border-neutral-400'} flex h-16 shrink-0 items-center gap-x-2 border-b px-5`}
+						href={'/users'}
+						scroll={false}
+					>
+						<FaUser className="h-4 w-4" />
+						<span>Users</span>
+					</Link>
+				)}
 			</nav>
-			<div className="h-8 w-8 rounded-full bg-neutral-200"></div>
+			{user ?
+				<Profile user={user} />
+			:	<div></div>}
 		</div>
 	)
 }

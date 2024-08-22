@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { getQueryObj } from '@/api/form_helpers/order'
+import { getQueryObj } from '@/utils/form-helpers/order'
 import Topbar from '@/components/shared/Topbar'
 import Filter from '@/components/orders/Filter'
 import OrdersGrid from '@/components/orders/OrdersGrid'
@@ -24,6 +24,7 @@ export default function Orders({ searchParams }: Props) {
 	// Prevent refresh on every click on order card
 	const queryObj = useMemo(
 		() => getQueryObj(searchParams),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[currentPage, search],
 	)
 

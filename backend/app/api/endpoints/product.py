@@ -1,16 +1,21 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi_pagination.links import Page
-
+from app.schemas.user import UserBase
 from app.crud import product as Product
 from app.schemas.product import Product as ProductOut, ProductCreate, ProductUpdate
 from app.db.session import get_db
+from app.dependencies.auth import verify_user
 
 router = APIRouter()
 
 
 @router.get("/", response_model=Page[ProductOut])
-def get_products(search: str = "", db: Session = Depends(get_db)):
+def get_products(
+    search: str = "",
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
+):
     products = Product.get_products(search, db)
     return products
 
@@ -19,6 +24,7 @@ def get_products(search: str = "", db: Session = Depends(get_db)):
 def create_product(
     product: ProductCreate,
     db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
 ):
     db_product = Product.get_product_by_name(db, product_name=product.name)
     if db_product:
@@ -27,7 +33,11 @@ def create_product(
 
 
 @router.get("/{product_id}", response_model=ProductOut)
-def read_product(product_id: int, db: Session = Depends(get_db)):
+def read_product(
+    product_id: int,
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
+):
     db_product = Product.get_product_by_id(db, product_id=product_id)
     if db_product is None:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -39,6 +49,7 @@ def update_product(
     product_id: int,
     product: ProductUpdate,
     db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
 ):
     db_product = Product.get_product_by_id(db, product_id=product_id)
     if db_product is None:
@@ -47,7 +58,11 @@ def update_product(
 
 
 @router.delete("/{product_id}", response_model=ProductOut)
-def delete_product(product_id: int, db: Session = Depends(get_db)):
+def delete_product(
+    product_id: int,
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
+):
     db_product = Product.get_product_by_id(db, product_id=product_id)
     if db_product is None:
         raise HTTPException(status_code=404, detail="Product not found")

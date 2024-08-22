@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import toast, { Toaster } from 'react-hot-toast'
 import useBridge from '@/hooks/useBridge'
-import { User } from '@/api/interfaces/user'
+import { User } from '@/interfaces/user'
 import EditUserModal from './EditModal'
 
 interface Props {

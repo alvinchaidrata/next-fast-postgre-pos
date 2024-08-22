@@ -1,5 +1,5 @@
-import { fetchUsers } from '@/api/data/user/fetchUsers'
-import { User, UserQuery } from '@/api/interfaces/user'
+import { fetchUsers } from '@/api/server/user/fetchUsers'
+import { User, UserQuery } from '@/interfaces/user'
 import UserCard from './UserCard'
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 
 export default async function UsersGrid({ ...props }: Props) {
 	const { query, currentPage } = props
+
 	const paginated_user = await fetchUsers(query, currentPage, 12)
 
 	return paginated_user.items.length > 0 ?

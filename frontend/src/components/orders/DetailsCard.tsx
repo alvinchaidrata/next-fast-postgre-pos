@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import { OrderProduct } from '@/api/interfaces/order'
-import numberWithCommas from '@/utils/numbers/numberWithCommas'
+import { OrderProduct } from '@/interfaces/order'
+import { numberWithCommas } from '@/utils/numbers/numberWithCommas'
 
 interface Props {
 	product: OrderProduct

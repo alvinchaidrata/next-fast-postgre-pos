@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateQuantity } from '@/redux/cart/cartSlice'
-import numberWithCommas from '@/utils/numbers/numberWithCommas'
-import { OrderProduct } from '@/api/interfaces/order'
+import { numberWithCommas } from '@/utils/numbers/numberWithCommas'
+import { OrderProduct } from '@/interfaces/order'
 
 interface Props {
 	product: OrderProduct

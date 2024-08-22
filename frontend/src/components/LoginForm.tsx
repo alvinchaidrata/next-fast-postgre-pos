@@ -1,14 +1,16 @@
 'use client'
 
-import { useState } from 'react'
 import axios from 'axios'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Formik } from 'formik'
-import { LoginForm, LoginFormError } from '@/api/interfaces/auth'
+import { LoginForm, LoginFormError } from '@/interfaces/auth'
 import Spinner from './global/Spinner'
 import UsernameInput from './UsernameInput'
 import PasswordInput from './PasswordInput'
 
 export default function LoginFormComponent() {
+	const router = useRouter()
 	const [dbError, setDbError] = useState<null | string>(null)
 
 	const submitModal = async (values: LoginForm) => {
@@ -17,17 +19,18 @@ export default function LoginFormComponent() {
 		formData.append('password', values.password)
 
 		await axios
-			.post(`${process.env.NEXT_PUBLIC_URL}/api/login`, formData)
-			.then((res) => {
-				if (res.data.status === 401) {
+			.post(`${process.env.NEXT_PUBLIC_URL}/api/auth/login`, formData)
+			.then(() => {
+				setDbError(null)
+				router.push('/shop')
+			})
+			.catch((err) => {
+				if (err.response.data.status === 401) {
 					setDbError('Username or password is wrong.')
-				} else if (res.data.status === 200) {
-					setDbError(null)
 				} else {
 					setDbError('Internal server error.')
 				}
 			})
-			.catch(() => setDbError('Internal server error.'))
 	}
 
 	const validateData = (values: LoginForm): LoginFormError => {

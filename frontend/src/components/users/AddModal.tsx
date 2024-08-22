@@ -4,15 +4,15 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Modal } from 'antd'
 import { Formik } from 'formik'
-import { createUser } from '@/api/data/user/createUser'
+import { createUser } from '@/api/client/user/createUser'
 import {
 	getInitialData,
 	validateData,
 	parseForm,
 	uploadImage,
-} from '@/api/form_helpers/user'
+} from '@/utils/form-helpers/user'
+import { UserForm } from '@/interfaces/user'
 import FormInputs from './FormInputs/Core'
-import { UserForm } from '@/api/interfaces/user'
 
 interface Props {
 	open: boolean

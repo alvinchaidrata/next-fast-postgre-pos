@@ -4,14 +4,14 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Modal } from 'antd'
 import { Formik } from 'formik'
-import { createProduct } from '@/api/data/product/createProduct'
-import { ProductForm } from '@/api/interfaces/product'
+import { createProduct } from '@/api/client/product/createProduct'
+import { ProductForm } from '@/interfaces/product'
 import {
 	getInitialData,
 	validateData,
 	parseForm,
 	uploadImage,
-} from '@/api/form_helpers/product'
+} from '@/utils/form-helpers/product'
 import FormInputs from './FormInputs/Core'
 
 interface Props {

@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from jose import jwt
+import json
 from pydantic import ValidationError
 from typing import Union
 from datetime import datetime
@@ -15,12 +16,16 @@ from ..utils.auth import ALGORITHM, JWT_SECRET_KEY
 reuseable_oauth = OAuth2PasswordBearer(tokenUrl="/login", scheme_name="JWT")
 
 
-async def get_current_user(
+async def verify_user(
     token: str = Depends(reuseable_oauth), db: Session = Depends(get_db)
 ) -> User:
     try:
-        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
+        # Axios headers automatically include "\r\n" hence we remove it here
+        payload = jwt.decode(
+            token.replace("\r\n", ""), JWT_SECRET_KEY, algorithms=[ALGORITHM]
+        )
         token_data = AuthToken(**payload)
+        token_user = json.loads(token_data.sub)
 
         if datetime.fromtimestamp(token_data.exp) < datetime.now():
             raise HTTPException(
@@ -35,7 +40,7 @@ async def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    user: Union[User, None] = UserCrud.get_user_by_id(db, token_data.sub)
+    user: Union[User, None] = UserCrud.get_user_by_id(db, token_user["id"])
 
     if user is None:
         raise HTTPException(
@@ -43,4 +48,14 @@ async def get_current_user(
             detail="Could not find user",
         )
 
-    return jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
+    return user
+
+
+async def verify_admin(user: User = Depends(verify_user)) -> User:
+    if user.role != "Admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return User

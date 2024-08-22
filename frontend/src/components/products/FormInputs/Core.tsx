@@ -2,13 +2,12 @@
 
 import React from 'react'
 import { useFormikContext, FormikContextType } from 'formik'
-
+import { ProductForm } from '@/interfaces/product'
 import ImageInput from './Inputs/Image'
 import NameInput from './Inputs/Name'
 import PriceInput from './Inputs/Price'
 import StockInput from './Inputs/Stock'
 import Footer from './Footer'
-import { ProductForm } from '@/api/interfaces/product'
 
 interface Props {
 	isLoading: boolean

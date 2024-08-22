@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { OrderProduct } from '@/api/interfaces/order'
-import { Product } from '@/api/interfaces/product'
-import { Cart } from '@/api/interfaces/session'
+import { OrderProduct } from '@/interfaces/order'
+import { Product } from '@/interfaces/product'
+import { Cart } from '@/interfaces/session'
 
 const baseCart = {
 	subtotal: 0,

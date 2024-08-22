@@ -1,7 +1,7 @@
-export default function numberWithCommas(
+export const numberWithCommas = (
 	input: number,
 	decimalPlace: number = 0,
-): string {
+): string => {
 	// Check if the input is a valid number
 	if (isNaN(input)) {
 		return '0'

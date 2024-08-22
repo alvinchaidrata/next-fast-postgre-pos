@@ -4,16 +4,16 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Modal } from 'antd'
 import { Formik } from 'formik'
-import { deleteUser } from '@/api/data/user/deleteUser'
+import { deleteUser } from '@/api/client/user/deleteUser'
+import { updateUserById } from '@/api/client/user/updateUserById'
 import {
 	getInitialData,
 	validateUpdateData,
 	parseForm,
 	uploadImage,
-} from '@/api/form_helpers/user'
+} from '@/utils/form-helpers/user'
+import { UserForm, User } from '@/interfaces/user'
 import FormInputs from './FormInputs/Core'
-import { User, UserForm } from '@/api/interfaces/user'
-import { updateUserById } from '@/api/data/user/updateUserById'
 
 interface Props {
 	user: User

@@ -1,16 +1,21 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi_pagination.links import Page
-
 from app.crud import order as Order
+from app.schemas.user import UserBase
 from app.schemas.order import Order as OrderOut, OrderCreate
 from app.db.session import get_db
+from app.dependencies.auth import verify_user
 
 router = APIRouter()
 
 
 @router.get("/", response_model=Page[OrderOut])
-def get_order(search: str = "", db: Session = Depends(get_db)):
+def get_order(
+    search: str = "",
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
+):
     orders = Order.get_orders(search, db)
     return orders
 
@@ -19,12 +24,17 @@ def get_order(search: str = "", db: Session = Depends(get_db)):
 def create_order(
     order: OrderCreate,
     db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
 ):
     return Order.create_order(db=db, order=order)
 
 
 @router.get("/{order_id}", response_model=OrderOut)
-def read_order(order_id: str, db: Session = Depends(get_db)):
+def read_order(
+    order_id: str,
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
+):
     db_order = Order.get_order_by_id(db, order_id=order_id)
     if db_order is None:
         raise HTTPException(status_code=404, detail="Order not found")
@@ -32,7 +42,11 @@ def read_order(order_id: str, db: Session = Depends(get_db)):
 
 
 @router.delete("/{order_id}", response_model=OrderOut)
-def delete_order(order_id: str, db: Session = Depends(get_db)):
+def delete_order(
+    order_id: str,
+    db: Session = Depends(get_db),
+    auth_user: UserBase = Depends(verify_user),
+):
     db_order = Order.get_order_by_id(db, order_id=order_id)
     if db_order is None:
         raise HTTPException(status_code=404, detail="Order not found")

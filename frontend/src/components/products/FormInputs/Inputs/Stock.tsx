@@ -2,8 +2,8 @@
 
 import { memo } from 'react'
 import InputWithLogo from '@/components/global/InputWithLogo'
-import numberWithCommas from '@/utils/numbers/numberWithCommas'
-import convertToNumber from '@/utils/numbers/convertToNumber'
+import { numberWithCommas } from '@/utils/numbers/numberWithCommas'
+import { convertToNumber } from '@/utils/numbers/convertToNumber'
 
 interface Props {
 	stock: string

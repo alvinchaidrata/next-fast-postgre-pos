@@ -1,7 +1,7 @@
 'use client'
 
-import { getQueryObj } from '@/api/form_helpers/product'
 import { StoreProvider } from '@/redux/StoreProvider'
+import { getQueryObj } from '@/utils/form-helpers/product'
 import Topbar from '@/components/shared/Topbar'
 import Filter from '@/components/shop/Filter'
 import ProductsGrid from '@/components/shop/ProductsGrid'

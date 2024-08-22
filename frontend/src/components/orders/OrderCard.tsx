@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { Order } from '@/api/interfaces/order'
-import numberWithCommas from '@/utils/numbers/numberWithCommas'
+import { Order } from '@/interfaces/order'
+import { numberWithCommas } from '@/utils/numbers/numberWithCommas'
 
 interface Props {
 	order: Order

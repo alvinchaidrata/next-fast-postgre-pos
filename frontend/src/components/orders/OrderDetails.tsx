@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { fetchOrderById } from '@/api/data/order/fetchOrderById'
-import getParsedDate from '@/utils/date/getParsedDate'
-import numberWithCommas from '@/utils/numbers/numberWithCommas'
-import { Order, OrderProduct } from '@/api/interfaces/order'
+import { fetchOrderById } from '@/api/client/order/fetchOrderById'
+import { getParsedDate } from '@/utils/date/getParsedDate'
+import { numberWithCommas } from '@/utils/numbers/numberWithCommas'
+import { Order, OrderProduct } from '@/interfaces/order'
 import DetailsCard from './DetailsCard'
 import OrderDetailsSkeleton from './OrderDetailsSkeleton'
 

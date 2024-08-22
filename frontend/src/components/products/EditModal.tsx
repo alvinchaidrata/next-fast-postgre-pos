@@ -4,15 +4,15 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Modal } from 'antd'
 import { Formik } from 'formik'
-import { updateProductById } from '@/api/data/product/updateProductById'
-import { deleteProduct } from '@/api/data/product/deleteProduct'
-import { Product, ProductForm } from '@/api/interfaces/product'
+import { updateProductById } from '@/api/client/product/updateProductById'
+import { deleteProduct } from '@/api/client/product/deleteProduct'
+import { Product, ProductForm } from '@/interfaces/product'
 import {
 	getInitialData,
 	validateData,
 	parseForm,
 	uploadImage,
-} from '@/api/form_helpers/product'
+} from '@/utils/form-helpers/product'
 import FormInputs from './FormInputs/Core'
 
 interface Props {

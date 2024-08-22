@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
+import { getQueryObj } from '@/utils/form-helpers/user'
 import Topbar from '@/components/shared/Topbar'
 import Filter from '@/components/products/Filter'
 import AddButton from '@/components/users/AddButton'
 import UsersGrid from '@/components/users/UsersGrid'
 import UsersGridSkeleton from '@/components/users/UsersGridSkeleton'
-import { getQueryObj } from '@/api/form_helpers/product'
 
 interface Props {
 	searchParams?: {

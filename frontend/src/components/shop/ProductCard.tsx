@@ -4,8 +4,9 @@ import Image from 'next/image'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateQuantity } from '@/redux/cart/cartSlice'
-import { Product } from '@/api/interfaces/product'
-import numberWithCommas from '@/utils/numbers/numberWithCommas'
+import { Product } from '@/interfaces/product'
+import { numberWithCommas } from '@/utils/numbers/numberWithCommas'
+import { OrderProduct } from '@/interfaces/order'
 
 interface Props {
 	product: Product
@@ -13,7 +14,9 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
 	const cart = useAppSelector((state) => state.cart)
-	const session = cart.products.find((prod) => prod.data.id === product.id)
+	const session = cart.products.find(
+		(prod: OrderProduct) => prod.data.id === product.id,
+	)
 	const dispatch = useAppDispatch()
 
 	return (

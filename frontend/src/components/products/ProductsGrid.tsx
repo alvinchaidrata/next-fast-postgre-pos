@@ -1,5 +1,5 @@
-import { fetchProducts } from '@/api/data/product/fetchProducts'
-import { Product, ProductQuery } from '@/api/interfaces/product'
+import { Product, ProductQuery } from '@/interfaces/product'
+import { fetchProducts } from '@/api/server/product/fetchProducts'
 import ProductCard from './ProductCard'
 import Pagination from './Pagination'
 
